@@ -24,9 +24,9 @@ const host = process.env.LOGINHOST;
 const loginPath = process.env.CLIENTLOGINPAGE;
 const resetPath = process.env.CLIENTRESETPASSURL;
 const confirmPath = process.env.CLIENTCONFIRMURL;
-
+const authHost = process.env.AUTHHOST;
 module.exports = {
-  dbUrl,
+  dbUrl,authHost,
   jwtSecret,
   serverPort,
   collection,

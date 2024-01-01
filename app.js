@@ -6,6 +6,7 @@ const app = express();
 var cors = require("cors");
 const recordRoute = require("./src/routes/record");
 const genericRoute = require("./src/routes/entityRecord");
+const authRoute = require("./src/routes/auth");
 
 
 app.use(cors());
@@ -22,6 +23,7 @@ app.get("/api", (req, res) => {
 
 app.use("/api", recordRoute);
 app.use("/api", genericRoute);
+app.use("/api", authRoute);
 
 const port = serverPort || 5000;
 const start = async () => {

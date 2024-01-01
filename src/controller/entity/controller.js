@@ -8,11 +8,9 @@ const {
 const mongoose = require("mongoose");
 const { getAppIdAndEntity, createProjectionFromArray, FilterOptions } = require("../../utils/service");
 const { collection } = require("../../config/setting");
-
 const genericSchema = mongoose.connection.collection(collection);
 
 const create = async (req, res) => {
-
   try {
     const result = await genericSchema.insertOne(req.body);
     res.status(StatusCodes.CREATED).json({

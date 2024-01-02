@@ -34,7 +34,7 @@ async function createMiddleWare(req, res, next) {
             next();
         }
     } else {
-        var currBody = { ...create_list, appId, containerId, ...extra }
+        var currBody = { ...req.body, appId, containerId, ...extra }
         req.body = currBody
         next();
     }

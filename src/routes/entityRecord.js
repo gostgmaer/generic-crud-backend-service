@@ -6,7 +6,7 @@ const {
   getSingleRecord,
   remove, removeMany,
   update,
-} = require("../controller/record/controller");
+} = require("../controller/entity/controller");
 const createMiddleWare = require("../middleware/createMiddleWare");
 
 genericRoute.route("/record/:appId/container/:containerId").post(createMiddleWare, create);

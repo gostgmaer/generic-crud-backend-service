@@ -138,8 +138,8 @@ const remove = async (req, res) => {
       });
     }
     const ID = new mongoose.Types.ObjectId(objectId);
-    const object = await genericSchema.findOneAndUpdate( { _id: ID },
-      { $set: { ...req.body, status:"INACTIVE"} },
+    const object = await genericSchema.findOneAndUpdate({ _id: ID },
+      { $set: { ...req.body, status: "INACTIVE" } },
       { returnOriginal: false });
     if (object?.lastErrorObject?.n == 0) {
       res.status(StatusCodes.NOT_FOUND).json({
@@ -177,8 +177,8 @@ const removeMany = async (req, res) => {
       });
     }
     const ID = new mongoose.Types.ObjectId(objectId);
-    const object = await genericSchema.bulkWrite( { _id: ID },
-      { $set: { ...req.body, status:"INACTIVE"} },
+    const object = await genericSchema.bulkWrite({ _id: ID },
+      { $set: { ...req.body, status: "INACTIVE" } },
       { returnOriginal: false });
     if (object?.lastErrorObject?.n == 0) {
       res.status(StatusCodes.NOT_FOUND).json({
@@ -206,9 +206,9 @@ const removeMany = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    
+
     const objectId = req.params.id;
- 
+
 
     if (!objectId) {
       res.status(StatusCodes.NOT_FOUND).json({
@@ -219,7 +219,7 @@ const update = async (req, res) => {
     }
     const ID = new mongoose.Types.ObjectId(objectId);
     const objectToUpdate = req.body
-  
+
     const result = await collection.findOneAndUpdate(
       { _id: ID },
       { $set: objectToUpdate },
@@ -254,6 +254,6 @@ module.exports = {
   create, createMany,
   get,
   getSingleRecord,
-  remove,removeMany,
+  remove, removeMany,
   update,
 };

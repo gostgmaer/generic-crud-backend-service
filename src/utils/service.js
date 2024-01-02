@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const axios = require("axios"); // You may need to install axios
+const { jwtSecret, authHost } = require("../config/setting");
 
 function getAppIdAndEntity(url) {
   const [pathPart] = url.split("?");
@@ -43,7 +44,6 @@ function createProjectionFromArray(fields) {
 }
 
 
-const { jwtSecret } = require("../config/setting");
 
 function decodeToken(token) {
   return new Promise((resolve, reject) => {
@@ -57,7 +57,7 @@ function decodeToken(token) {
   });
 }
 
-const FilterOptions = (sort = "updatedAt:desc", page, limit, filter,extra) => {
+const FilterOptions = (sort = "updatedAt:desc", page, limit, filter, extra) => {
 
   var arrayOfValues = {}
 
@@ -105,7 +105,7 @@ const FilterOptions = (sort = "updatedAt:desc", page, limit, filter,extra) => {
   };
   return {
     options: options,
-    query: query,arrayOfValues
+    query: query, arrayOfValues
   };
 };
 
@@ -195,6 +195,43 @@ const generateMatchQuery = (query) => {
   return dynamicQuery;
 };
 
+
+
+const invoke = async (endpint, param, req) => {
+
+
+  const { accessToken, session } = req.headers
+
+  const option = {
+    method: param.method,
+    url: authHost + endpint,
+    headers: {
+      Authorization: " beader " + accessToken,
+      session_id: session,
+    },
+    params: param.query,
+    data: param.body,
+  };
+  let response;
+  let error;
+  try {
+    response = await axios.request(option);
+    return response?.data
+
+  } catch (e) {
+    error = e.response.data;
+    return e.response.data
+  }
+
+
+};
+
+
+
+
+
+
+
 module.exports = {
   decodeToken,
   FilterOptions,
@@ -203,5 +240,5 @@ module.exports = {
   FilterOptionsSearch,
   getAppIdAndEntity,
   createProjectionFromArray,
-  isemptyObject,
+  isemptyObject, invoke,
 };

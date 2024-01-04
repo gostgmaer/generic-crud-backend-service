@@ -200,13 +200,13 @@ const generateMatchQuery = (query) => {
 const invoke = async (endpint, param, req) => {
 
 
-  const { accessToken, session } = req.headers
+  const { authorization, session } = req.headers
 
   const option = {
     method: param.method,
     url: authHost + endpint,
     headers: {
-      Authorization: " beader " + accessToken,
+      authorization: authorization,
       session_id: session,
     },
     params: param.query,

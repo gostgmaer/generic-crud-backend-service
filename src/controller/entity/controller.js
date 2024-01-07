@@ -217,7 +217,7 @@ const update = async (req, res) => {
     const ID = new mongoose.Types.ObjectId(objectId);
     const objectToUpdate = req.body
   
-    const result = await collection.findOneAndUpdate(
+    const result = await genericSchema.findOneAndUpdate(
       { _id: ID },
       { $set: objectToUpdate },
       { returnOriginal: false }

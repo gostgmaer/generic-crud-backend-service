@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const axios = require("axios"); // You may need to install axios
 const { jwtSecret, authHost } = require("../config/setting");
+const { jwtDecode } = require("jwt-decode");
 
 function getAppIdAndEntity(url) {
   const [pathPart] = url.split("?");
@@ -57,7 +58,7 @@ function decodeToken(token) {
   });
 }
 
-const FilterOptions = (sort = "updatedAt:desc", page, limit, filter, extra) => {
+const FilterOptions = (sort = "updatedAt:desc", page, limit, filter, extra,select_keys) => {
 
   var arrayOfValues = {}
 
@@ -65,7 +66,7 @@ const FilterOptions = (sort = "updatedAt:desc", page, limit, filter, extra) => {
 
   if (filter) {
     const filterObj = JSON.parse(filter);
-    const selectKeys = req?.query?.select_keys
+    const selectKeys = select_keys
     if (selectKeys) {
       const cleanedArray = selectKeys.split(',').map(value => value.replace(/'/g, ''));
       arrayOfValues = createProjectionFromArray(cleanedArray);
@@ -228,6 +229,21 @@ const invoke = async (endpint, param, req) => {
 
 
 
+const getUserInfo = (req) => {
+  const token = req.headers.authorization;
+  if (!token || !token.startsWith('Bearer ')) {
+    return {}
+  } else {
+    const tokenValue = token.split(' ')[1];
+    const decode = jwtDecode(tokenValue)
+    return {
+      user: decode.user_id,
+      user_email: decode.email,
+      username: decode.username,
+    }
+  }
+}
+
 
 
 
@@ -240,5 +256,5 @@ module.exports = {
   FilterOptionsSearch,
   getAppIdAndEntity,
   createProjectionFromArray,
-  isemptyObject, invoke,
+  isemptyObject, invoke,getUserInfo
 };

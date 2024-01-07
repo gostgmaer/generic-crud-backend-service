@@ -14,7 +14,7 @@ authRoute.route("/authentication/user/confirm:token").post(confirm);
 authRoute.route("/authentication/user/reset-password:token").post(reset);
 authRoute.route("/authentication/user/forget-password").post(forget);
 authRoute.route("/authentication/user/change-password").post(changes);
-authRoute.route("/authentication/user/current/profile").post(profile);
+authRoute.route("/authentication/user/current/profile").get(profile);
 
 
 module.exports = authRoute;

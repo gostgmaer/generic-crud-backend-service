@@ -54,9 +54,9 @@ const get = async (req, res) => {
   try {
     const { appId, containerId } = req.params
 
-    const { sort, page, limit, filter } = req.query;
+    const { sort, page, limit, filter,select_keys } = req.query;
 
-    const filterData = FilterOptions(sort, page, limit, filter, extra = { appId })
+    const filterData = FilterOptions(sort, page, limit, filter, extra = { appId },select_keys)
 
     const objects = await genericSchema.find({ ...filterData.query, appId,containerId }, { projection: filterData.arrayOfValues })
       .sort(filterData.options.sort)

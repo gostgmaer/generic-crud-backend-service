@@ -9,6 +9,7 @@ const {
 const mongoose = require("mongoose");
 const { getAppIdAndEntity, createProjectionFromArray, FilterOptions, invoke } = require("../../utils/service");
 const { authHost } = require("../../config/setting");
+const { jwtDecode } = require("jwt-decode");
 
 
 const register = async (req, res) => {
@@ -188,7 +189,7 @@ const profile = async (req, res) => {
             body: req.body
         }
 
-        const id = jwtd
+        const id = access_token.user_id
 
         const request = await invoke(`/user/auth/profile/${req.params.user}`, param, req)
         res.status(request.statusCode).json(request);

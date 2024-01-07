@@ -8,10 +8,11 @@ const {
   update,
 } = require("../controller/entity/controller");
 const createMiddleWare = require("../middleware/createMiddleWare");
+const userMiddleWare = require("../middleware/userAccess");
 
 genericRoute.route("/record/:appId/container/:containerId").post(createMiddleWare, create);
 genericRoute.route("/record/bulk/:appId/container/:containerId").post(createMiddleWare, createMany);
-genericRoute.route("/record/:appId/container/:containerId").get(get);
+genericRoute.route("/record/:appId/container/:containerId").get(userMiddleWare,get);
 genericRoute.route("/record/:appId/container/:containerId/:id").get(getSingleRecord);
 genericRoute.route("/record/:appId/container/:containerId/:id").patch(update);
 genericRoute.route("/record/bulk/:appId/container/:containerId").patch(update);

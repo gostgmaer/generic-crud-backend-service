@@ -200,9 +200,8 @@ const generateMatchQuery = (query) => {
 
 const invoke = async (endpint, param, req) => {
 
-
   const { authorization, session } = req.headers
-
+  
   const option = {
     method: param.method,
     url: authHost + endpint,

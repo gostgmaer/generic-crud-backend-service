@@ -1,5 +1,5 @@
 const express = require("express");
-const { register, login, signOut, refresh, verify, confirm, reset, forget, changes, profile } = require("../controller/auth");
+const { register, login, signOut, refresh, verify, confirm, reset, forget, changes, profile, Updateprofile } = require("../controller/auth");
 const authRoute = express.Router();
 
 
@@ -15,6 +15,8 @@ authRoute.route("/authentication/user/reset-password:token").post(reset);
 authRoute.route("/authentication/user/forget-password").post(forget);
 authRoute.route("/authentication/user/change-password").post(changes);
 authRoute.route("/authentication/user/current/profile").get(profile);
+authRoute.route("/authentication/user/current/profile/update/:user").patch(Updateprofile);
+
 
 
 module.exports = authRoute;

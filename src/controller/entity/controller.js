@@ -38,11 +38,7 @@ const get = async (req, res) => {
     // .skip(filterData.options.skip)
     // .limit(parseInt(filterData.options.limit))
     //  .toArray();
-    const totalCount = await genericSchema.countDocuments({
-      ...filterData.query,
-      appId,
-      containerId,
-    });
+    const totalCount = await genericSchema.countDocuments(query);
 
     res.status(StatusCodes.OK).json({
       result: objects,

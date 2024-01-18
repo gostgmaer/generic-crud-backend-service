@@ -5,6 +5,7 @@ const serverPort = process.env.PORT;
 const collection = process.env.COLLECTION;
 
 const authHost = process.env.AUTHHOST;
+
 module.exports = {
   dbUrl,
   authHost,

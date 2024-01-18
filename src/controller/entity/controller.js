@@ -33,7 +33,7 @@ const get = async (req, res) => {
     let query = { ...filterData.query, appId, containerId };
     let projection = { projection: filterData.arrayOfValues };
 
-    const objects = await genericSchema.find(query).toArray();
+    const objects = await genericSchema.find(query).toArray;
     // .sort(filterData.options.sort)
     // .skip(filterData.options.skip)
     // .limit(parseInt(filterData.options.limit))

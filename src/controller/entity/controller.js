@@ -72,10 +72,10 @@ const get = async (req, res) => {
         { ...filterData.query, appId, containerId },
         { projection: filterData.arrayOfValues }
       )
-      .sort(filterData.options.sort)
-      .skip(filterData.options.skip)
-      .limit(parseInt(filterData.options.limit))
-      .toArray();
+      // .sort(filterData.options.sort)
+      // .skip(filterData.options.skip)
+      // .limit(parseInt(filterData.options.limit))
+      // .toArray();
     const totalCount = await genericSchema.countDocuments({
       ...filterData.query,
       appId,

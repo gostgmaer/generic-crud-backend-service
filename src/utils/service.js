@@ -173,6 +173,18 @@ async function getLocationInfo(ip) {
   }
 }
 
+// function removeEmptyKeys(obj) {
+//   for (const key in obj) {
+//     if (obj.hasOwnProperty(key)) {
+//       const value = obj[key];
+
+//       if (value === null || value === undefined || value === "") {
+//         delete obj[key];
+//       }
+//     }
+//   }
+// }
+
 function removeEmptyKeys(obj) {
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
@@ -180,6 +192,14 @@ function removeEmptyKeys(obj) {
 
       if (value === null || value === undefined || value === "") {
         delete obj[key];
+      } else if (typeof value === 'object' && !Array.isArray(value)) {
+        // Recursively remove empty keys in nested objects
+        removeEmptyKeys(value);
+
+        // After removing empty keys, check if the nested object is now empty
+        if (Object.keys(value).length === 0) {
+          delete obj[key];
+        }
       }
     }
   }

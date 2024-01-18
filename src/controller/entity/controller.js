@@ -11,46 +11,10 @@ const {
   createProjectionFromArray,
   FilterOptions,
 } = require("../../utils/service");
+
 const { collection } = require("../../config/setting");
+
 const genericSchema = mongoose.connection.collection(collection);
-
-const create = async (req, res) => {
-  try {
-    const result = await genericSchema.insertOne(req.body);
-    res.status(StatusCodes.CREATED).json({
-      message: "Record Created Successfully!",
-      status: ReasonPhrases.CREATED,
-      statusCode: StatusCodes.CREATED,
-      result: result,
-    });
-  } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      message: error.message,
-      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-      status: ReasonPhrases.INTERNAL_SERVER_ERROR,
-    });
-  }
-};
-
-const createMany = async (req, res) => {
-  try {
-    const result = await genericSchema.insertMany(req.body);
-    res.status(StatusCodes.CREATED).json({
-      message: "Record Created Successfully!",
-      status: ReasonPhrases.CREATED,
-      statusCode: StatusCodes.CREATED,
-      result: result,
-    });
-  } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      message: error.message,
-      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-      status: ReasonPhrases.INTERNAL_SERVER_ERROR,
-    });
-  }
-};
-
-//Get All Record
 
 const get = async (req, res) => {
   try {
@@ -66,21 +30,15 @@ const get = async (req, res) => {
       (extra = { appId }),
       select_keys
     );
+    let query = { ...filterData.query, appId, containerId };
+    let projection = { projection: filterData.arrayOfValues };
 
-    const objects = await genericSchema
-      .find(
-        { ...filterData.query, appId, containerId },
-        { projection: filterData.arrayOfValues }
-      )
-      // .sort(filterData.options.sort)
-      // .skip(filterData.options.skip)
-      // .limit(parseInt(filterData.options.limit))
+    const objects = await genericSchema.find(query).toArray();
+    // .sort(filterData.options.sort)
+    // .skip(filterData.options.skip)
+    // .limit(parseInt(filterData.options.limit))
     //  .toArray();
-    const totalCount = await genericSchema.countDocuments({
-      ...filterData.query,
-      appId,
-      containerId,
-    });
+    const totalCount = await genericSchema.countDocuments(query);
 
     res.status(StatusCodes.OK).json({
       result: objects,
@@ -136,7 +94,41 @@ const getSingleRecord = async (req, res) => {
     });
   }
 };
+const create = async (req, res) => {
+  try {
+    const result = await genericSchema.insertOne(req.body);
+    res.status(StatusCodes.CREATED).json({
+      message: "Record Created Successfully!",
+      status: ReasonPhrases.CREATED,
+      statusCode: StatusCodes.CREATED,
+      result: result,
+    });
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: error.message,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      status: ReasonPhrases.INTERNAL_SERVER_ERROR,
+    });
+  }
+};
 
+const createMany = async (req, res) => {
+  try {
+    const result = await genericSchema.insertMany(req.body);
+    res.status(StatusCodes.CREATED).json({
+      message: "Record Created Successfully!",
+      status: ReasonPhrases.CREATED,
+      statusCode: StatusCodes.CREATED,
+      result: result,
+    });
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: error.message,
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
+      status: ReasonPhrases.INTERNAL_SERVER_ERROR,
+    });
+  }
+};
 const remove = async (req, res) => {
   try {
     const { appId } = req.params;

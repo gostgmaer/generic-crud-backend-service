@@ -98,7 +98,7 @@ const get = async (req, res) => {
     res.status(StatusCodes.OK).json({
       result: objects,
       total_record: totalCount,
-      message: `Resumes Loaded Successfully!`,
+      message: `Records Loaded Successfully!`,
       statusCode: StatusCodes.OK,
       status: ReasonPhrases.OK,
     });
